@@ -94,8 +94,10 @@ def fill_archives(src, dst, startFrom):
         fromTime = time.time() - archive['retention']
         if fromTime >= startFrom:
             continue
-
-        (timeInfo, values) = fetch(dst, fromTime, startFrom)
+        try:
+            (timeInfo, values) = fetch(dst, fromTime, startFrom)
+        except NoneType, e:
+            continue
         (start, end, step) = timeInfo
         gapstart = None
         for v in values:
